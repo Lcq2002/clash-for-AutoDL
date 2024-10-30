@@ -78,8 +78,11 @@ vim .env
 <br>
 
 ## 启动程序
+先安装envsubst，否则可能报错bash: proxy_on: command not found
+具体可以看issues：https://github.com/VocabVictor/clash-for-AutoDL/issues/25#issue-2512208000
 
 直接运行脚本文件`start.sh`
+> !!!如果已经运行脚本，请使用`restart.sh`,不要使用`start.sh`
 
 - 进入项目目录
 
