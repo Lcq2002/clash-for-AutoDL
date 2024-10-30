@@ -39,7 +39,7 @@ SUBCONVERTER_TAR="subconverter.tar.gz"
 Config_File="$Conf_Dir/config.yaml"
 
 # URL变量
-SUBCONVERTER_DOWNLOAD_URL="https://kkgithub.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz"
+SUBCONVERTER_DOWNLOAD_URL="/root/autodl-tmp/clash-for-AutoDL/mihomo-linux-amd64-v1.18.7.gz"
 URL=${CLASH_URL:?Error: CLASH_URL variable is not set or empty}
 # Clash 密钥
 Secret=${CLASH_SECRET:-$(openssl rand -hex 32)}
@@ -187,15 +187,19 @@ install_subconverter() {
     for i in $(seq 1 $MAX_RETRIES); do
         echo "正在下载 subconverter... (尝试 $i/$MAX_RETRIES)"
         
-        # 使用wget下载文件
-        if $WGET_CMD \
-            --progress=bar:force:noscroll \
-            --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 3 \
-            -O "$TEMP_FILE" \
-            "$SUBCONVERTER_DOWNLOAD_URL"; then
+        # # 使用wget下载文件
+        # if $WGET_CMD \
+        #     --progress=bar:force:noscroll \
+        #     --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 3 \
+        #     -O "$TEMP_FILE" \
+        #     "$SUBCONVERTER_DOWNLOAD_URL"; then
             
-            echo "下载完成，正在解压..."
+            # echo "下载完成，正在解压..."
             
+            # 使用本地文件代替下载
+        if cp "$SUBCONVERTER_DOWNLOAD_URL" "$TEMP_FILE"; then
+            echo "已找到本地 subconverter 文件，正在解压..."
+
             # 捕获tar的输出和退出状态
             tar_output=$(tar -xzf "$TEMP_FILE" -C "$Server_Dir" 2>&1)
             tar_status=$?
